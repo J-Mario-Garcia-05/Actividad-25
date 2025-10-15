@@ -14,25 +14,13 @@ class Estudiante:
         conn = sqlite3.connect(DB_NAME)
         conn.row_factory = sqlite3.Row
         conn.execute("""
-                     CREATE TABLE IF NOT EXISTS estudiantes
-                     (
-                         id_estudiante
-                         INTEGER
-                         PRIMARY
-                         KEY
-                         AUTO_INCREMENT,
-                         nombre
-                         TEXT
-                         NOT
-                         NULL,
-                         carrera
-                         TEXT
-                         NOT
-                         NULL,
-                         promedio
-                         REAL
-                     );
-                     """)
+            CREATE TABLE IF NOT EXISTS estudiantes(
+                id_estudiante INTEGER PRIMARY KEY AUTO_INCREMENT,
+                nombre TEXT NOT NULL,
+                carrera TEXT NOT NULL,
+                promedio REAL
+            );
+         """)
         conn.commit()
         return conn
 
@@ -122,7 +110,8 @@ class Cursos:
             )
             print(f"Curso {self.nombre} guardado.")
 
-    def listar(self):
+    @staticmethod
+    def listar():
         with Cursos._conn() as conn:
             cur = conn.execute("SELECT * FROM cursos")
             lista = cur.fetchall()
@@ -132,7 +121,8 @@ class Cursos:
             for curso in lista:
                 print(f"Id: {curso['id']} | Nombre: {curso['nombre']}")
 
-    def modificar(self):
+    @staticmethod
+    def modificar():
         id = input("Ingrese ID del curso a modificar: ")
         with Cursos._conn() as conn:
             cur = conn.execute("SELECT * FROM cursos WHERE id_curso = ?", (id,))
@@ -146,7 +136,8 @@ class Cursos:
                 (nombre, id)
             )
 
-    def eliminar(self):
+    @staticmethod
+    def eliminar():
         id = input("Ingrese ID del curso a eliminar: ")
         with Cursos._conn() as conn:
             cur = conn.execute("DELETE FROM cursos WHERE id_curso = ?", (id,))
@@ -235,9 +226,9 @@ def menu():
         print("\n===== MENÚ DE ESTUDIANTES =====")
         print("1. Realizar registros")
         print("2. Listar tablas")
-        print("3. Modificar estudiante")
-        print("4. Eliminar estudiante")
-        print("5. Promedio general")
+        print("3. Realizar modificaciones")
+        print("4. Realizar eliminaciones")
+        print("5. Promedio general de estudiantes")
         print("0. Salir")
         opcion = input("Seleccione una opción: ")
 
@@ -267,9 +258,19 @@ def menu():
             print("\n--CURSOS--")
             Cursos.listar()
         elif opcion == "3":
+            print("--MODIFICAR ESTUDIANTES--")
             Estudiante.modificar()
+            print("\n--MODIFICAR DOCENTES--")
+            Docentes.modificar()
+            print("\n--MODIFICAR CURSOS--")
+            Cursos.modificar()
         elif opcion == "4":
+            print("--ELIMINAR ESTUDIANTE--")
             Estudiante.eliminar()
+            print("\n--ELIMINAR DOCENTE--")
+            Docentes.eliminar()
+            print("\n--ELIMINAR CURSO--")
+            Cursos.eliminar()
         elif opcion == "5":
             Estudiante.promedio_general()
         elif opcion == "0":
