@@ -106,12 +106,11 @@ class Cursos:
         conn = sqlite3.connect(DB_NAME)
         conn.row_factory = sqlite3.Row
         conn.execute("""
-                     CREATE TABLE IF NOT EXISTS cursos
-                     (
-                         id_curso INTEGER PRIMARY KEY AUTO_INCREMENT,
-                         nombre TEXT NOT NULL
-                     );
-                     """)
+            CREATE TABLE IF NOT EXISTS cursos(
+                id_curso INTEGER PRIMARY KEY AUTO_INCREMENT,
+                nombre TEXT NOT NULL
+            );
+        """)
         conn.commit()
         return conn
 
@@ -176,7 +175,7 @@ class Docentes:
                 grado_academico TEXT NOT NULL,
                 curso INTEGER NOT NULL,
                 salario DECIMAL NOT NULL
-            )
+            );
         """)
         conn.commit()
         return conn
@@ -189,14 +188,53 @@ class Docentes:
             )
             print(f"Docente {self.nombre} guardado correctamente.")
 
+    @staticmethod
+    def listar():
+        with Docentes._conn() as conn:
+            cur = conn.execute("SELECT * FROM docentes")
+            docentes = cur.fetchall()
+            if not docentes:
+                print("No hay docentes registrados")
+                return
+            for docente in docentes:
+                print(f"ID: {docente['id']} | Nombre: {docente['nombre']} | Grado Académico: {docente['grado_academico']}"
+                      f"Curso: {docente['curso']} | Salario: {docente['salario']:.2f}")
 
+    @staticmethod
+    def modificar():
+        id = input("Ingrese ID del docente a modificar: ")
+        with Docentes._conn() as conn:
+            cur = conn.execute("SELECT * FROM docentes WHERE id_docente = ?", (id,))
+            docente = cur.fetchone()
+            if not docente:
+                print("No se encontró al docente.")
+                return
+            nombre = input(f"Nuevo nombre: {docente['nombre']} ") or docente['nombre']
+            grado_academico = input(f"Nuevo Grado académico: {docente['grado_academico']} ") or docente['grado_academico']
+            curso = input(f"Id de Nuevo curso: {docente['curso']} ") or docente['curso']
+            salario = input(f"Nuevo salario: {docente['salario']} ") or docente['salario']
+            conn.execute(
+                "UPDATE FROM docentes SET nombre=?, grado_academico=?, curso=?, salario=? WHERE id_docente=?",
+                (nombre, grado_academico, curso, salario, id)
+            )
+            print("Datos del docente actualizado correctamente.")
+
+    @staticmethod
+    def eliminar():
+        with Docentes._conn() as conn:
+            id = input("Ingrese ID del docente a eliminar: ")
+            cur = conn.execute("DELETE FROM docentes WHERE id_docente = ?", (id,))
+            if cur.rowcount == 0:
+                print("No se encontró al docente.")
+            else:
+                print("Docente eliminado correctamente.")
 
 # --- MENÚ PRINCIPAL ---
 def menu():
     while True:
         print("\n===== MENÚ DE ESTUDIANTES =====")
-        print("1. Ingresar estudiante")
-        print("2. Listar estudiantes")
+        print("1. Realizar registros")
+        print("2. Listar tablas")
         print("3. Modificar estudiante")
         print("4. Eliminar estudiante")
         print("5. Promedio general")
@@ -204,13 +242,30 @@ def menu():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
+            print("--Estudiante--")
             nombre = input("Nombre: ")
             carrera = input("Carrera: ")
             promedio = float(input("Promedio: "))
             e = Estudiante(nombre, carrera, promedio)
             e.guardar()
+            print("\n--Docente--")
+            nombre = input("Nombre: ")
+            grado_academico = input("Grado academico: ")
+            curso = input("Id de curso: ")
+            salario = float(input("Salario: Q."))
+            d = Docentes(nombre, grado_academico, curso, salario)
+            d.guardar()
+            print("\n--Curso--")
+            nombre = input("Nombre: ")
+            c = Cursos(nombre)
+            c.guardar()
         elif opcion == "2":
+            print("--ESTUDIANTES--")
             Estudiante.listar()
+            print("\n--DOCENTES--")
+            Docentes.listar()
+            print("\n--CURSOS--")
+            Cursos.listar()
         elif opcion == "3":
             Estudiante.modificar()
         elif opcion == "4":
