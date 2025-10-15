@@ -15,11 +15,11 @@ class Estudiante:
         conn.row_factory = sqlite3.Row
         conn.execute("""
             CREATE TABLE IF NOT EXISTS estudiantes(
-                id_estudiante INTEGER PRIMARY KEY AUTO_INCREMENT,
+                id_estudiante INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL,
                 carrera TEXT NOT NULL,
                 promedio REAL
-            );
+            )
          """)
         conn.commit()
         return conn
@@ -95,7 +95,7 @@ class Cursos:
         conn.row_factory = sqlite3.Row
         conn.execute("""
             CREATE TABLE IF NOT EXISTS cursos(
-                id_curso INTEGER PRIMARY KEY AUTO_INCREMENT,
+                id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL
             );
         """)
@@ -161,7 +161,7 @@ class Docentes:
         conn.row_factory = sqlite3.Row
         conn.execute("""
             CREATE TABLE IF NOT EXISTS docentes(
-                id_docente INTEGER PRIMARY KEY AUTO_INCREMENT,
+                id_docente INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL,
                 grado_academico TEXT NOT NULL,
                 curso INTEGER NOT NULL,
