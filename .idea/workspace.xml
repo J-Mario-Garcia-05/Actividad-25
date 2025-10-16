@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98969c49-3f8a-4519-b5fa-1af020c12cdc" name="Changes" comment="Agregar opciones de consulta en el menú">
+    <list default="true" id="98969c49-3f8a-4519-b5fa-1af020c12cdc" name="Changes" comment="Modificar Autoincrement">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Actividad_25(SQLITE).py" beforeDir="false" afterPath="$PROJECT_DIR$/Actividad_25(SQLITE).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cursos.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +24,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "J-Mario-Garcia-05"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/J-Mario-Garcia-05/Actividad-25.git",
@@ -66,7 +74,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760544565618</updated>
-      <workItem from="1760544566790" duration="4876000" />
+      <workItem from="1760544566790" duration="9051000" />
     </task>
     <task id="LOCAL-00001" summary="Tablas y consutas de curso">
       <option name="closed" value="true" />
@@ -92,7 +100,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760549384769</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Modificar Autoincrement">
+      <option name="closed" value="true" />
+      <created>1760549499351</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1760549499351</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,9 +118,10 @@
     <MESSAGE value="Tablas y consutas de curso" />
     <MESSAGE value="Tablas y consutas de docente" />
     <MESSAGE value="Agregar opciones de consulta en el menú" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregar opciones de consulta en el menú" />
+    <MESSAGE value="Modificar Autoincrement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificar Autoincrement" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Actividad_25$Actividad_25_SQLITE_.coverage" NAME="Actividad_25(SQLITE) Coverage Results" MODIFIED="1760549443008" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Actividad_25$Actividad_25_SQLITE_.coverage" NAME="Actividad_25(SQLITE) Coverage Results" MODIFIED="1760590477767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

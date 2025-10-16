@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_NAME = "estudiantes.db"
+DB_NAME = "actividad_25.db"
 
 
 class Estudiante:
@@ -30,7 +30,7 @@ class Estudiante:
                 "INSERT INTO estudiantes (nombre, carrera, promedio) VALUES (?, ?, ?)",
                 (self.nombre, self.carrera, self.promedio)
             )
-        print(f"Estudiante '{self.nombre}' guardado con éxito.")
+        print(f"Estudiante '{self.nombre}' registrado con éxito.")
 
     @staticmethod
     def listar():
@@ -82,8 +82,6 @@ class Estudiante:
                 print("No hay datos para calcular el promedio.")
 
 
-DB_NAME = "cursos.db"
-
 
 class Cursos:
     def __init__(self, nombre):
@@ -95,7 +93,7 @@ class Cursos:
         conn.row_factory = sqlite3.Row
         conn.execute("""
             CREATE TABLE IF NOT EXISTS cursos(
-                id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL
             );
         """)
@@ -108,7 +106,7 @@ class Cursos:
                 "INSERT INTO cursos (nombre) VALUES (?)",
                 (self.nombre,)
             )
-            print(f"Curso {self.nombre} guardado.")
+            print(f"Curso {self.nombre} registrado correctamente.")
 
     @staticmethod
     def listar():
@@ -116,8 +114,9 @@ class Cursos:
             cur = conn.execute("SELECT * FROM cursos")
             lista = cur.fetchall()
             if not lista:
-                print("No hay cursos registrados")
+                print("No hay cursos registrados.")
                 return
+            print("\n--- LISTADO DE CURSOS ---")
             for curso in lista:
                 print(f"Id: {curso['id']} | Nombre: {curso['nombre']}")
 
@@ -125,27 +124,27 @@ class Cursos:
     def modificar():
         id = input("Ingrese ID del curso a modificar: ")
         with Cursos._conn() as conn:
-            cur = conn.execute("SELECT * FROM cursos WHERE id_curso = ?", (id,))
+            cur = conn.execute("SELECT * FROM cursos WHERE id = ?", (id,))
             curso = cur.fetchone()
             if not curso:
                 print("No se encontró el curso")
                 return
             nombre = input(f"Nuevo nombre [{curso['nombre']}]: ") or curso['nombre']
             conn.execute(
-                "UPDATE FROM cursos SET nombre=? WHERE id_curso=?",
+                "UPDATE cursos SET nombre=? WHERE id=?",
                 (nombre, id)
             )
+            print("Curso actualizado correctamente.")
 
     @staticmethod
     def eliminar():
         id = input("Ingrese ID del curso a eliminar: ")
         with Cursos._conn() as conn:
-            cur = conn.execute("DELETE FROM cursos WHERE id_curso = ?", (id,))
+            cur = conn.execute("DELETE FROM cursos WHERE id = ?", (id,))
             if cur.rowcount == 0:
                 print("No se encontró el curso.")
             else:
                 print("Curso eliminado correctamente.")
-
 
 
 class Docentes:
@@ -161,11 +160,11 @@ class Docentes:
         conn.row_factory = sqlite3.Row
         conn.execute("""
             CREATE TABLE IF NOT EXISTS docentes(
-                id_docente INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre TEXT NOT NULL,
                 grado_academico TEXT NOT NULL,
                 curso INTEGER NOT NULL,
-                salario DECIMAL NOT NULL
+                salario REAL
             );
         """)
         conn.commit()
@@ -174,7 +173,7 @@ class Docentes:
     def guardar(self):
         with self._conn() as conn:
             conn.execute(
-                "INSERT INTO docentes (nombre, grado_academico, curso, salario), VALUES(?, ?, ?)",
+                "INSERT INTO docentes (nombre, grado_academico, curso, salario) VALUES(?, ?, ?, ?)",
                 (self.nombre, self.grado_academico, self.curso, self.salario)
             )
             print(f"Docente {self.nombre} guardado correctamente.")
@@ -187,6 +186,7 @@ class Docentes:
             if not docentes:
                 print("No hay docentes registrados")
                 return
+            print("\n--LISTADO DE DOCENTES--")
             for docente in docentes:
                 print(f"ID: {docente['id']} | Nombre: {docente['nombre']} | Grado Académico: {docente['grado_academico']}"
                       f"Curso: {docente['curso']} | Salario: {docente['salario']:.2f}")
@@ -195,17 +195,17 @@ class Docentes:
     def modificar():
         id = input("Ingrese ID del docente a modificar: ")
         with Docentes._conn() as conn:
-            cur = conn.execute("SELECT * FROM docentes WHERE id_docente = ?", (id,))
+            cur = conn.execute("SELECT * FROM docentes WHERE id = ?", (id,))
             docente = cur.fetchone()
             if not docente:
                 print("No se encontró al docente.")
                 return
-            nombre = input(f"Nuevo nombre: {docente['nombre']} ") or docente['nombre']
-            grado_academico = input(f"Nuevo Grado académico: {docente['grado_academico']} ") or docente['grado_academico']
-            curso = input(f"Id de Nuevo curso: {docente['curso']} ") or docente['curso']
-            salario = input(f"Nuevo salario: {docente['salario']} ") or docente['salario']
+            nombre = input(f"Nuevo nombre |{docente['nombre']}|: ") or docente['nombre']
+            grado_academico = input(f"Nuevo Grado académico |{docente['grado_academico']}|: ") or docente['grado_academico']
+            curso = input(f"Id de Nuevo curso |{docente['curso']}|: ") or docente['curso']
+            salario = input(f"Nuevo salario |{docente['salario']}|: ") or docente['salario']
             conn.execute(
-                "UPDATE FROM docentes SET nombre=?, grado_academico=?, curso=?, salario=? WHERE id_docente=?",
+                "UPDATE docentes SET nombre=?, grado_academico=?, curso=?, salario=? WHERE id=?",
                 (nombre, grado_academico, curso, salario, id)
             )
             print("Datos del docente actualizado correctamente.")
